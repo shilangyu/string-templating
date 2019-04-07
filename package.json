@@ -1,0 +1,24 @@
+{
+  "name": "string-templating",
+  "version": "1.0.0",
+  "description": "template strings and output them to a file (use-case: sql queries)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shilangyu/string-templating.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shilangyu/string-templating/issues"
+  },
+  "homepage": "https://github.com/shilangyu/string-templating#readme",
+  "devDependencies": {
+    "@types/node": "^11.13.0",
+    "typescript": "^3.4.2"
+  }
+}
