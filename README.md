@@ -94,12 +94,3 @@ for (let i of range(5, 13, 3)) console.log(i)
 11
 */
 ```
-
-## TODO
-
-- [ ] change output to be a buffer to support huge contents
-- [x] deploy to npm
-- [ ] create `random` helper function
-- [ ] iterators with input values
-- [ ] iterators not returning strings
-- [ ] add examples
