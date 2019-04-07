@@ -95,7 +95,7 @@ for (let i of range(5, 13, 3)) console.log(i)
 ## TODO
 
 - [ ] change output to be a buffer to support huge contents
-- [ ] deploy to npm
+- [x] deploy to npm
 - [ ] create `random` helper function
 - [ ] iterators with input values
 - [ ] iterators not returning strings
