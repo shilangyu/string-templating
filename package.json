@@ -36,6 +36,7 @@
 		"pre-commit": "pnpm test"
 	},
 	"files": [
-		"dist/**/*"
+		"dist/**/*",
+		"./tsconfig.json"
 	]
 }
