@@ -2,7 +2,8 @@
 	"name": "string-templating",
 	"version": "1.0.0",
 	"description": "template strings and output them to a file (use-case: sql queries)",
-	"main": "app.js",
+	"main": "./dist/app.js",
+	"types": "./dist/app.d.ts",
 	"scripts": {
 		"test": "jest --no-cache"
 	},
