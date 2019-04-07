@@ -3,6 +3,7 @@
 ✨ zero dependencies✨
 
 template strings and output them to a file (use-case: sql queries, ML datasets)
+
 `npm i --save string-templating`
 
 ## usage
@@ -56,7 +57,9 @@ General purpuse helper functions typical for string templating
 
 #### range
 
-`const { range } = require('string-templating')`
+```js
+const { range } = require('string-templating')
+```
 
 ```ts
 export function range(to: number): Iterable<number>
