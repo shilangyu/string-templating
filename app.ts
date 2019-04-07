@@ -1,18 +1,14 @@
 import * as fs from 'fs'
 import { range } from './helpers'
 
-interface Generator<T> extends Iterable<T> {
-	next: () => { value: T; done: boolean }
-}
-
 type Props = {
 	amount: number
 	template: string
 	outFile?: fs.PathLike
-	generators: { [key: string]: Generator<string> }
+	generators: { [key: string]: Iterator<string> }
 }
 
-export default ({ amount, template, outFile = 'out.txt', generators }: Props) => {
+export default ({ amount, template, outFile = 'out.txt', generators }: Props): string => {
 	const outputs = new Array<string>(amount)
 
 	for (const i of range(amount)) {
@@ -27,7 +23,10 @@ export default ({ amount, template, outFile = 'out.txt', generators }: Props) =>
 		groups: { ext }
 	} = (outFile as string).match(/\.(?<ext>\w+)^/) as { groups: { [key: string]: string } }
 
-	fs.writeFileSync(outFile, ext === 'json' ? JSON.stringify(outputs) : outputs.join('\n'))
+	const result = ext === 'json' ? JSON.stringify(outputs) : outputs.join('\n')
+	fs.writeFileSync(outFile, result)
+
+	return result
 }
 
 export { range } from './helpers'
