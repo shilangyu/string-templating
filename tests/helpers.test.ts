@@ -1,4 +1,4 @@
-import { range } from '../app'
+import { range } from '../src/app'
 
 describe('`range` helper function', () => {
 	it('tests passing only upper limit', () => {

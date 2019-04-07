@@ -1,4 +1,4 @@
-import StrTempl from '../app'
+import StrTempl from '../src/app'
 import * as fs from 'fs'
 
 const cleanFile = (path: fs.PathLike) => {
