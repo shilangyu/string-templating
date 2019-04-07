@@ -1,8 +1,7 @@
-export const range: (from: number, to?: number, step?: number) => Iterable<number> = function*(
-	from,
-	to,
-	step = 1
-) {
+export function range(to: number): Iterable<number>
+export function range(from: number, to: number, step?: number): Iterable<number>
+
+export function* range(from: number, to?: number, step = 1) {
 	if (to === undefined) {
 		to = from
 		from = 0
