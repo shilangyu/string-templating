@@ -50,4 +50,52 @@ i should be incrementing: 5`
 
 		expect(result).toBe(expected)
 	})
+
+	it('tests if the file has correct content (txt)', () => {
+		StrTempl({
+			amount: 5,
+			template: 'i should be incrementing: ${iterator.inc}',
+			iterators: {
+				inc: function*() {
+					for (let i = 1; i <= 5; i++) {
+						yield '' + i
+					}
+				}
+			},
+			outFile: 'out.txt'
+		})
+
+		const result = fs.readFileSync('out.txt').toString()
+		const expected = `i should be incrementing: 1
+i should be incrementing: 2
+i should be incrementing: 3
+i should be incrementing: 4
+i should be incrementing: 5`
+
+		cleanFile('out.txt')
+
+		expect(result).toBe(expected)
+	})
+
+	it('tests if the file has correct content (json)', () => {
+		StrTempl({
+			amount: 5,
+			template: 'i should be incrementing: ${iterator.inc}',
+			iterators: {
+				inc: function*() {
+					for (let i = 1; i <= 5; i++) {
+						yield '' + i
+					}
+				}
+			},
+			outFile: 'out.json'
+		})
+
+		const result = fs.readFileSync('out.json').toString()
+		const expected = `["i should be incrementing: 1","i should be incrementing: 2","i should be incrementing: 3","i should be incrementing: 4","i should be incrementing: 5"]`
+
+		cleanFile('out.json')
+
+		expect(result).toBe(expected)
+	})
 })
