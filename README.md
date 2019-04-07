@@ -1,11 +1,14 @@
 # string templating
 
+✨ zero dependencies✨
+
 template strings and output them to a file (use-case: sql queries, ML datasets)
+`npm i --save string-templating`
 
 ## usage
 
 ```js
-const strTempl = require('/*soon*/')
+const strTempl = require('string-templating').default
 
 const output = strTempl({
 	amount: 5,
@@ -52,6 +55,8 @@ type Props = {
 General purpuse helper functions typical for string templating
 
 #### range
+
+`const { range } = require('string-templating')`
 
 ```ts
 export function range(to: number): Iterable<number>
