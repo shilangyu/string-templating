@@ -4,11 +4,11 @@ import { range } from './helpers'
 type Props = {
 	amount: number
 	template: string
-	outFile?: fs.PathLike
+	outFile?: fs.PathLike | null
 	iterators: { [key: string]: () => Iterator<string> }
 }
 
-export default ({ amount, template, outFile = 'out.txt', iterators }: Props): string => {
+export default ({ amount, template, outFile = null, iterators }: Props): string => {
 	const outputs = new Array<string>(amount)
 
 	const initIters: { [key: string]: Iterator<string> } = {}
@@ -24,12 +24,15 @@ export default ({ amount, template, outFile = 'out.txt', iterators }: Props): st
 		outputs[i] = curr
 	}
 
-	const {
-		groups: { ext }
-	} = (outFile as string).match(/\.(?<ext>\w+)$/) as { groups: { [key: string]: string } }
+	const result = outputs.join('\n')
 
-	const result = ext === 'json' ? JSON.stringify(outputs) : outputs.join('\n')
-	fs.writeFileSync(outFile, result)
+	if (outFile !== null) {
+		const {
+			groups: { ext }
+		} = (outFile as string).match(/\.(?<ext>\w+)$/) as { groups: { [key: string]: string } }
+
+		fs.writeFileSync(outFile, ext === 'json' ? JSON.stringify(outputs) : result)
+	}
 
 	return result
 }
