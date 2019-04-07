@@ -119,4 +119,29 @@ i should be incrementing: 5`
 
 		expect(result).toBe(expected)
 	})
+
+	it('tests recycling', () => {
+		const result = StrTempl({
+			amount: 5,
+			template: 'i should be incrementing twice: ${iterator.inc} ${iterator.inc}',
+			iterators: {
+				inc: function*() {
+					for (let i = 1; i <= 10; i++) {
+						yield '' + i
+					}
+				}
+			},
+			recycle: true
+		})
+
+		const expected = `i should be incrementing twice: 1 2
+i should be incrementing twice: 3 4
+i should be incrementing twice: 5 6
+i should be incrementing twice: 7 8
+i should be incrementing twice: 9 10`
+
+		cleanFile('out.txt')
+
+		expect(result).toBe(expected)
+	})
 })

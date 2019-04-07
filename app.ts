@@ -6,9 +6,16 @@ type Props = {
 	template: string
 	outFile?: fs.PathLike | null
 	iterators: { [key: string]: () => Iterator<string> }
+	recycle?: boolean
 }
 
-export default ({ amount, template, outFile = null, iterators }: Props): string => {
+export default ({
+	amount,
+	template,
+	outFile = null,
+	iterators,
+	recycle = false
+}: Props): string => {
 	const outputs = new Array<string>(amount)
 
 	const initIters: { [key: string]: Iterator<string> } = {}
@@ -17,9 +24,19 @@ export default ({ amount, template, outFile = null, iterators }: Props): string 
 	}
 
 	for (const i of range(amount)) {
-		let curr = ''
+		let curr = template
 		for (const key of Object.keys(initIters)) {
-			curr = template.split('${iterator.' + key + '}').join(initIters[key].next().value)
+			const toReplace = '${iterator.' + key + '}'
+
+			if (recycle) {
+				while (true) {
+					if (curr.includes(toReplace)) {
+						curr = curr.replace(toReplace, initIters[key].next().value)
+					} else break
+				}
+			} else {
+				curr = template.split('${iterator.' + key + '}').join(initIters[key].next().value)
+			}
 		}
 		outputs[i] = curr
 	}
