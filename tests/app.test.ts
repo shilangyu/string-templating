@@ -98,4 +98,25 @@ i should be incrementing: 5`
 
 		expect(result).toBe(expected)
 	})
+
+	it('tests if the file has same content as return value', () => {
+		const result = StrTempl({
+			amount: 5,
+			template: 'i should be incrementing: ${iterator.inc}',
+			iterators: {
+				inc: function*() {
+					for (let i = 1; i <= 5; i++) {
+						yield '' + i
+					}
+				}
+			},
+			outFile: 'out.txt'
+		})
+
+		const expected = fs.readFileSync('out.txt').toString()
+
+		cleanFile('out.txt')
+
+		expect(result).toBe(expected)
+	})
 })
