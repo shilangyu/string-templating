@@ -29,5 +29,8 @@
 	},
 	"hooks": {
 		"pre-commit": "pnpm test"
-	}
+	},
+	"files": [
+		"dist/**/*"
+	]
 }
