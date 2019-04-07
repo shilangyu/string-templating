@@ -1,19 +1,24 @@
 {
 	"name": "string-templating",
 	"version": "2.0.0",
-	"description": "template strings and output them to a file (use-case: sql queries)",
+	"description": "template strings and output them to a file (use-case: sql queries, ML datasets)",
 	"main": "./dist/app.js",
 	"types": "./dist/app.d.ts",
 	"scripts": {
 		"test": "jest --no-cache",
-		"build": "tsc"
+		"build": "tsc",
+		"prepare": "npm run build"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/shilangyu/string-templating.git"
 	},
-	"keywords": [],
-	"author": "",
+	"keywords": [
+		"string-templating",
+		"dataset",
+		"generate"
+	],
+	"author": "Marcin Wojnarowski @shilangyu",
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/shilangyu/string-templating/issues"
