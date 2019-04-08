@@ -60,4 +60,4 @@ export default ({
 	return result
 }
 
-export { range } from './helpers'
+export * from './helpers'
