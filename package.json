@@ -7,7 +7,9 @@
 	"scripts": {
 		"test": "jest --no-cache",
 		"build": "tsc",
-		"prepare": "npm run build"
+		"prepare": "npm run build",
+		"prepublishOnly": "pnpm test",
+		"postversion": "git push --tags"
 	},
 	"repository": {
 		"type": "git",
