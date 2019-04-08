@@ -57,7 +57,7 @@ type Props = {
 
 ## helper functions
 
-General purpuse helper functions typical for string templating
+General purpose helper functions typical for string templating
 
 #### range
 
