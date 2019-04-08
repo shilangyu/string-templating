@@ -17,7 +17,7 @@ const output = strTempl({
 	iterators: {
 		inc: function*() {
 			for (let i = 1; i <= 5; i++) {
-				yield '' + i
+				yield i
 			}
 		}
 	}
@@ -36,11 +36,15 @@ i should be incrementing: 5
 ## config
 
 ```ts
+interface Stringifiable {
+	toString: () => string
+}
+
 type Props = {
 	amount: number
 	template: string
 	outFile?: fs.PathLike | null
-	iterators: { [key: string]: () => Iterator<string> }
+	iterators: { [key: string]: () => Iterator<Stringifiable> }
 	recycle?: boolean
 }
 ```

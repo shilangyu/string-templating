@@ -1,11 +1,15 @@
 import * as fs from 'fs'
 import { range } from './helpers'
 
+interface Stringifiable {
+	toString: () => string
+}
+
 type Props = {
 	amount: number
 	template: string
 	outFile?: fs.PathLike | null
-	iterators: { [key: string]: () => Iterator<string> }
+	iterators: { [key: string]: () => Iterator<Stringifiable> }
 	recycle?: boolean
 }
 
@@ -18,7 +22,7 @@ export default ({
 }: Props): string => {
 	const outputs = new Array<string>(amount)
 
-	const initIters: { [key: string]: Iterator<string> } = {}
+	const initIters: { [key: string]: Iterator<Stringifiable> } = {}
 	for (const key of Object.keys(iterators)) {
 		initIters[key] = iterators[key]()
 	}
@@ -31,11 +35,13 @@ export default ({
 			if (recycle) {
 				while (true) {
 					if (curr.includes(toReplace)) {
-						curr = curr.replace(toReplace, initIters[key].next().value)
+						curr = curr.replace(toReplace, initIters[key].next().value.toString())
 					} else break
 				}
 			} else {
-				curr = template.split('${iterator.' + key + '}').join(initIters[key].next().value)
+				curr = template
+					.split('${iterator.' + key + '}')
+					.join(initIters[key].next().value.toString())
 			}
 		}
 		outputs[i] = curr

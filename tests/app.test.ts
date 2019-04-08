@@ -15,7 +15,7 @@ describe('app', () => {
 			iterators: {
 				inc: function*() {
 					for (let i = 1; i <= 5; i++) {
-						yield '' + i
+						yield i
 					}
 				}
 			}
@@ -36,7 +36,7 @@ i should be incrementing: 5`
 			iterators: {
 				inc: function*() {
 					for (let i = 1; i <= 5; i++) {
-						yield '' + i
+						yield i
 					}
 				}
 			},
@@ -58,7 +58,7 @@ i should be incrementing: 5`
 			iterators: {
 				inc: function*() {
 					for (let i = 1; i <= 5; i++) {
-						yield '' + i
+						yield i
 					}
 				}
 			},
@@ -84,7 +84,7 @@ i should be incrementing: 5`
 			iterators: {
 				inc: function*() {
 					for (let i = 1; i <= 5; i++) {
-						yield '' + i
+						yield i
 					}
 				}
 			},
@@ -106,7 +106,7 @@ i should be incrementing: 5`
 			iterators: {
 				inc: function*() {
 					for (let i = 1; i <= 5; i++) {
-						yield '' + i
+						yield i
 					}
 				}
 			},
@@ -127,7 +127,7 @@ i should be incrementing: 5`
 			iterators: {
 				inc: function*() {
 					for (let i = 1; i <= 10; i++) {
-						yield '' + i
+						yield i
 					}
 				}
 			},
