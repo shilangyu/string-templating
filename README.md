@@ -98,3 +98,22 @@ for (let i of range(5, 13, 3)) console.log(i)
 11
 */
 ```
+
+#### random
+
+```js
+const { random } = require('string-templating')
+```
+
+```ts
+export function random(to: number, decimal?: boolean): number
+export function random(from: number, to: number, decimal?: boolean): number
+```
+
+```js
+random(5) // integer in the range of [0, 5)
+random(5, true) // decimal in the range of [0, 5)
+
+random(-3, 4) // integer in the range of [-3, 4)
+random(-3, 4, true) // decimal in the range of [-3, 4)
+```
