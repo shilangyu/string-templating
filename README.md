@@ -134,7 +134,7 @@ random([1, true, 'whoop']) // returns random element from the array
 
 ## examples
 
-`cd examples` -> `npm i` -> `node <examples_name>`
+`cd examples` -> `npm i` -> `node <example_name>`
 
 #### operations
 
