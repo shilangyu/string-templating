@@ -148,4 +148,24 @@ i should be incrementing: 5`
 
 		expect(result).toEqual(expected)
 	})
+
+	it('tests returners', () => {
+		const result = StrTempl({
+			amount: 5,
+			template: '${iterator.num}+${iterator.num}=${returner.sum}',
+			iterators: {
+				num: function*() {
+					yield* [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+				}
+			},
+			returners: {
+				sum: iterVals => iterVals.num[0] + iterVals.num[1]
+			},
+			recycle: true
+		})
+
+		const expected = [`1+2=3`, `3+4=7`, `5+6=11`, `7+8=15`, `9+10=19`]
+
+		expect(result).toEqual(expected)
+	})
 })

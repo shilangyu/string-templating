@@ -10,11 +10,16 @@ type IteratorMap = {
 	[key: string]: () => Iterator<Stringifiable>
 }
 
+type ReturnerMap = {
+	[key: string]: (iteratorValues: any) => Stringifiable
+}
+
 type Props = {
 	amount: number
 	template: string
 	outFile?: fs.PathLike | null
 	iterators: IteratorMap
+	returners?: ReturnerMap
 	recycle?: boolean
 }
 
@@ -33,6 +38,7 @@ export default ({
 	template,
 	outFile = null,
 	iterators,
+	returners = {},
 	recycle = false
 }: Props): string[] => {
 	const outputs = new Array<string>(amount)
@@ -42,19 +48,34 @@ export default ({
 	for (const i of range(amount)) {
 		let curr = template
 
+		const iterVals: { [key: string]: Stringifiable | Stringifiable[] } = {}
+
 		for (const key of Object.keys(initIters)) {
 			const toReplace = '${iterator.' + key + '}'
 
 			if (recycle) {
+				iterVals[key] = []
 				while (true) {
 					if (curr.includes(toReplace)) {
-						curr = curr.replace(toReplace, initIters[key].next().value.toString())
+						const currVal = initIters[key].next().value
+						curr = curr.replace(toReplace, currVal.toString())
+						;(iterVals[key] as Stringifiable[]).push(currVal)
 					} else break
 				}
 			} else {
-				curr = template.split(toReplace).join(initIters[key].next().value.toString())
+				const currVal = initIters[key].next().value
+				curr = curr.split(toReplace).join(currVal.toString())
+				iterVals[key] = currVal
 			}
 		}
+
+		for (const key of Object.keys(returners)) {
+			const toReplace = '${returner.' + key + '}'
+
+			const currVal = returners[key](iterVals)
+			curr = curr.split(toReplace).join(currVal.toString())
+		}
+
 		outputs[i] = curr
 	}
 

@@ -6,6 +6,12 @@ template strings and output them to a file (use-case: sql queries, ML datasets)
 
 `npm i --save string-templating`
 
+- [usage](#usage)
+- [config](#config)
+- [helper functions](#helper-functions)
+  - [range](#range)
+  - [random](#random)
+
 ## usage
 
 ```js
@@ -13,24 +19,19 @@ const strTempl = require('string-templating').default
 
 const output = strTempl({
 	amount: 5,
-	template: 'i should be incrementing: ${iterator.inc}',
+	template: '${iterator.num}+${iterator.num}=${returners.sum}',
 	iterators: {
-		inc: function*() {
-			for (let i = 1; i <= 5; i++) {
-				yield i
-			}
+		num: function*() {
+			yield* [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 		}
-	}
+	},
+	returners: {
+		sum: iterVals => iterVals.num[0] + iterVals.num[1]
+	},
+	recycle: true
 })
 
-console.log(output)
-/*
-['i should be incrementing: 1',
-'i should be incrementing: 2',
-'i should be incrementing: 3',
-'i should be incrementing: 4',
-'i should be incrementing: 5']
-*/
+console.log(output) // [`1+2=3`, `3+4=7`, `5+6=11`, `7+8=15`, `9+10=19`]
 ```
 
 ## config
@@ -40,19 +41,29 @@ interface Stringifiable {
 	toString: () => string
 }
 
+type IteratorMap = {
+	[key: string]: () => Iterator<Stringifiable>
+}
+
+type ReturnerMap = {
+	[key: string]: (iteratorValues: any) => Stringifiable
+}
+
 type Props = {
 	amount: number
 	template: string
 	outFile?: fs.PathLike | null
-	iterators: { [key: string]: () => Iterator<Stringifiable> }
+	iterators: IteratorMap
+	returners?: ReturnerMap
 	recycle?: boolean
 }
 ```
 
 - `amount`: amount of strings to be generated
-- `template`: the string to be templated. `${iterator.yourname}` in the string will be replaced with values from your iterators
+- `template`: the string to be templated. `${iterator.yourname}` in the string will be replaced with values from your iterators; `${returner.yourname}` in the string will be replaced with values from your returners
 - `outFile`: if you wish for the output to be saved to a file, specify a file path. If your file will have a json extention it will be saved as a json array
 - `iterators`: object with your iterators
+- `returners`: object with your returners. A returner will get all generated values from iterators as an object. Values will be stored as an array (if recycling is ON) or plain value (if recycling is OFF)
 - `recycle`: if true, new values will be generated for each replacement in the template (otherwise each template generation gets one value)
 
 ## helper functions
