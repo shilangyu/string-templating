@@ -20,13 +20,15 @@ describe('app', () => {
 				}
 			}
 		})
-		const expected = `i should be incrementing: 1
-i should be incrementing: 2
-i should be incrementing: 3
-i should be incrementing: 4
-i should be incrementing: 5`
+		const expected = [
+			`i should be incrementing: 1`,
+			`i should be incrementing: 2`,
+			`i should be incrementing: 3`,
+			`i should be incrementing: 4`,
+			`i should be incrementing: 5`
+		]
 
-		expect(result).toBe(expected)
+		expect(result).toEqual(expected)
 	})
 
 	it('tests if it creates a file', () => {
@@ -74,7 +76,7 @@ i should be incrementing: 5`
 
 		cleanFile('out.txt')
 
-		expect(result).toBe(expected)
+		expect(result).toEqual(expected)
 	})
 
 	it('tests if the file has correct content (json)', () => {
@@ -111,7 +113,7 @@ i should be incrementing: 5`
 				}
 			},
 			outFile: 'out.txt'
-		})
+		}).join('\n')
 
 		const expected = fs.readFileSync('out.txt').toString()
 
@@ -134,14 +136,16 @@ i should be incrementing: 5`
 			recycle: true
 		})
 
-		const expected = `i should be incrementing twice: 1 2
-i should be incrementing twice: 3 4
-i should be incrementing twice: 5 6
-i should be incrementing twice: 7 8
-i should be incrementing twice: 9 10`
+		const expected = [
+			`i should be incrementing twice: 1 2`,
+			`i should be incrementing twice: 3 4`,
+			`i should be incrementing twice: 5 6`,
+			`i should be incrementing twice: 7 8`,
+			`i should be incrementing twice: 9 10`
+		]
 
 		cleanFile('out.txt')
 
-		expect(result).toBe(expected)
+		expect(result).toEqual(expected)
 	})
 })

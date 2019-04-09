@@ -25,11 +25,11 @@ const output = strTempl({
 
 console.log(output)
 /*
-i should be incrementing: 1
-i should be incrementing: 2
-i should be incrementing: 3
-i should be incrementing: 4
-i should be incrementing: 5
+['i should be incrementing: 1',
+'i should be incrementing: 2',
+'i should be incrementing: 3',
+'i should be incrementing: 4',
+'i should be incrementing: 5']
 */
 ```
 

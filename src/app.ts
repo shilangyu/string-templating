@@ -34,7 +34,7 @@ export default ({
 	outFile = null,
 	iterators,
 	recycle = false
-}: Props): string => {
+}: Props): string[] => {
 	const outputs = new Array<string>(amount)
 
 	const initIters = initializeIters(iterators)
@@ -58,15 +58,13 @@ export default ({
 		outputs[i] = curr
 	}
 
-	const result = outputs.join('\n')
-
 	if (outFile !== null) {
 		const ext = path.extname(outFile as string)
 
-		fs.writeFileSync(outFile, ext === '.json' ? JSON.stringify(outputs) : result)
+		fs.writeFileSync(outFile, ext === '.json' ? JSON.stringify(outputs) : outputs.join('\n'))
 	}
 
-	return result
+	return outputs
 }
 
 export * from './helpers'
