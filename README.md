@@ -116,4 +116,6 @@ random(5, true) // decimal in the range of [0, 5)
 
 random(-3, 4) // integer in the range of [-3, 4)
 random(-3, 4, true) // decimal in the range of [-3, 4)
+
+random([1, true, 'whoop']) // returns random element from the array
 ```

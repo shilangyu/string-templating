@@ -55,4 +55,12 @@ describe('`random` helper function', () => {
 
 		expect(result).toBe(expected)
 	})
+
+	it('tests passing an array', () => {
+		Math.random = () => 0.6
+		const result = random([-3, -1, true])
+		const expected = -1
+
+		expect(result).toBe(expected)
+	})
 })
