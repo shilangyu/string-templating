@@ -11,6 +11,7 @@ template strings and output them to a file (use-case: sql queries, ML datasets)
 - [helper functions](#helper-functions)
   - [range](#range)
   - [random](#random)
+- [examples](#examples)
 
 ## usage
 
@@ -130,3 +131,11 @@ random(-3, 4, true) // decimal in the range of [-3, 4)
 
 random([1, true, 'whoop']) // returns random element from the array
 ```
+
+## examples
+
+`cd examples` -> `npm i` -> `node <examples_name>`
+
+#### operations
+
+Generates `train.txt` and `test.txt`. The files contain calculations: `{num1}{operand}{num2}={result}`. A very simple example of a dataset generated for a basic machine learning problem (I later used it to train and test a neural network to perform these basic calculations).

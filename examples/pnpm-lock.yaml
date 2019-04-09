@@ -1,0 +1,10 @@
+dependencies:
+  string-templating: 2.6.0
+lockfileVersion: 5
+packages:
+  /string-templating/2.6.0:
+    dev: false
+    resolution:
+      integrity: sha512-uz1PvanvHdc7+4gsgPA49aSOw6qwjbcxgzpQh8sOd/CKqCR1vTUrIz+G1RfEpZF0LQojzekeRSnN4YzMXe0KSg==
+specifiers:
+  string-templating: ^2.6.0

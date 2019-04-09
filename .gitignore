@@ -62,3 +62,7 @@ typings/
 
 # typescript
 dist/
+
+# examples
+examples/test.txt
+examples/train.txt
