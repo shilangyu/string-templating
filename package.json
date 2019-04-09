@@ -9,7 +9,7 @@
 		"build": "tsc",
 		"prepare": "npm run build",
 		"prepublishOnly": "pnpm test",
-		"postversion": "git push --tags"
+		"postversion": "git push && git push --tags"
 	},
 	"repository": {
 		"type": "git",
