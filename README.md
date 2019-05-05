@@ -1,7 +1,5 @@
 # string templating
 
-✨ zero dependencies✨
-
 template strings and output them to a file (use-case: sql queries, ML datasets)
 
 `npm i --save string-templating`
