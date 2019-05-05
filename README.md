@@ -120,6 +120,7 @@ const { random } = require('string-templating')
 ```ts
 export function random(to: number, decimal?: boolean): number
 export function random(from: number, to: number, decimal?: boolean): number
+export function random<T>(array: T[]): T
 ```
 
 ```js
