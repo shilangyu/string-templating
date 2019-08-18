@@ -22,7 +22,7 @@ function calc({ number: numbers, operand }) {
 }
 
 const config = {
-	template: '${iterator.number}${iterator.operand}${iterator.number}=${returner.calc}',
+	template: '${iterators.number}${iterators.operand}${iterators.number}=${returners.calc}',
 	iterators: {
 		number,
 		operand
