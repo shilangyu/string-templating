@@ -1,5 +1,5 @@
-import StrTempl from '../src/app'
 import * as fs from 'fs'
+import StrTempl, { ExtractIteratorValues } from '../src/app'
 
 const cleanFile = (path: fs.PathLike) => {
 	if (fs.existsSync(path)) {
@@ -11,7 +11,7 @@ describe('app', () => {
 	it('tests if returned value is correct', () => {
 		const result = StrTempl({
 			amount: 5,
-			template: 'i should be incrementing: ${iterator.inc}',
+			template: 'i should be incrementing: ${iterators.inc}',
 			iterators: {
 				inc: function*() {
 					for (let i = 1; i <= 5; i++) {
@@ -34,7 +34,7 @@ describe('app', () => {
 	it('tests if it creates a file', () => {
 		StrTempl({
 			amount: 5,
-			template: 'i should be incrementing: ${iterator.inc}',
+			template: 'i should be incrementing: ${iterators.inc}',
 			iterators: {
 				inc: function*() {
 					for (let i = 1; i <= 5; i++) {
@@ -56,7 +56,7 @@ describe('app', () => {
 	it('tests if the file has correct content (txt)', () => {
 		StrTempl({
 			amount: 5,
-			template: 'i should be incrementing: ${iterator.inc}',
+			template: 'i should be incrementing: ${iterators.inc}',
 			iterators: {
 				inc: function*() {
 					for (let i = 1; i <= 5; i++) {
@@ -82,7 +82,7 @@ i should be incrementing: 5`
 	it('tests if the file has correct content (json)', () => {
 		StrTempl({
 			amount: 5,
-			template: 'i should be incrementing: ${iterator.inc}',
+			template: 'i should be incrementing: ${iterators.inc}',
 			iterators: {
 				inc: function*() {
 					for (let i = 1; i <= 5; i++) {
@@ -104,7 +104,7 @@ i should be incrementing: 5`
 	it('tests if the file has same content as return value', () => {
 		const result = StrTempl({
 			amount: 5,
-			template: 'i should be incrementing: ${iterator.inc}',
+			template: 'i should be incrementing: ${iterators.inc}',
 			iterators: {
 				inc: function*() {
 					for (let i = 1; i <= 5; i++) {
@@ -125,7 +125,7 @@ i should be incrementing: 5`
 	it('tests recycling', () => {
 		const result = StrTempl({
 			amount: 5,
-			template: 'i should be incrementing twice: ${iterator.inc} ${iterator.inc}',
+			template: 'i should be incrementing twice: ${iterators.inc} ${iterators.inc}',
 			iterators: {
 				inc: function*() {
 					for (let i = 1; i <= 10; i++) {
@@ -150,19 +150,22 @@ i should be incrementing: 5`
 	})
 
 	it('tests returners', () => {
-		const result = StrTempl({
+		const iterators = {
+			num: function*() {
+				yield* [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+			}
+		}
+		const config: any /*weird ts-node error*/ = {
 			amount: 5,
-			template: '${iterator.num}+${iterator.num}=${returner.sum}',
-			iterators: {
-				num: function*() {
-					yield* [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-				}
-			},
+			template: '${iterators.num}+${iterators.num}=${returners.sum}',
+			iterators,
 			returners: {
-				sum: iterVals => iterVals.num[0] + iterVals.num[1]
+				sum: (iterVals: ExtractIteratorValues<typeof iterators, true>) =>
+					iterVals.num[0] + iterVals.num[1]
 			},
 			recycle: true
-		})
+		}
+		const result = StrTempl(config)
 
 		const expected = [`1+2=3`, `3+4=7`, `5+6=11`, `7+8=15`, `9+10=19`]
 

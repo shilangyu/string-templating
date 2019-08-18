@@ -10,11 +10,13 @@ template strings and output them to a file (use-case: sql queries, ML datasets)
   - [range](#range)
   - [random](#random)
 - [examples](#examples)
+- [typescript](#typescript)
+  - [strongly typed returners](#strongly-typed-returners)
 
 ## usage
 
 ```js
-const strTempl = require('string-templating').default
+import strTempl from 'string-templating'
 
 const output = strTempl({
 	amount: 5,
@@ -36,22 +38,22 @@ console.log(output) // [`1+2=3`, `3+4=7`, `5+6=11`, `7+8=15`, `9+10=19`]
 ## config
 
 ```ts
-interface Stringifiable {
+interface IStringifiable {
 	toString: () => string
 }
 
 type IteratorMap = {
-	[key: string]: () => Iterator<Stringifiable>
+	[key: string]: () => Iterator<IStringifiable>
 }
 
 type ReturnerMap = {
-	[key: string]: (iteratorValues: any) => Stringifiable
+	[key: string]: (iteratorValues: unknown) => IStringifiable
 }
 
-type Props = {
+interface ITemplatingOptions {
 	amount: number
 	template: string
-	outFile?: fs.PathLike | null
+	outFile?: fs.PathLike
 	iterators: IteratorMap
 	returners?: ReturnerMap
 	recycle?: boolean
@@ -59,7 +61,7 @@ type Props = {
 ```
 
 - `amount`: amount of strings to be generated
-- `template`: the string to be templated. `${iterator.yourname}` in the string will be replaced with values from your iterators; `${returner.yourname}` in the string will be replaced with values from your returners
+- `template`: the string to be templated. `${iterators.yourname}` in the string will be replaced with values from your iterators; `${returners.yourname}` in the string will be replaced with values from your returners
 - `outFile`: if you wish for the output to be saved to a file, specify a file path. If your file will have a json extention it will be saved as a json array
 - `iterators`: object with your iterators
 - `returners`: object with your returners. A returner will get all generated values from iterators as an object. Values will be stored as an array (if recycling is ON) or plain value (if recycling is OFF)
@@ -72,7 +74,7 @@ General purpose helper functions typical for string templating
 #### range
 
 ```js
-const { range } = require('string-templating')
+import { range } from 'string-templating'
 ```
 
 ```ts
@@ -112,7 +114,7 @@ for (let i of range(5, 13, 3)) console.log(i)
 #### random
 
 ```js
-const { random } = require('string-templating')
+import { random } from 'string-templating'
 ```
 
 ```ts
@@ -137,4 +139,35 @@ random([1, true, 'whoop']) // returns random element from the array
 
 #### operations
 
-Generates `train.txt` and `test.txt`. The files contain calculations: `{num1}{operand}{num2}={result}`. A very simple example of a dataset generated for a basic machine learning problem (I later used it to train and test a neural network to perform these basic calculations).
+Generates `train.txt` and `test.txt`. The files contain calculations: `{num1}{operand}{num2}={result}`. A very simple example of a dataset generated for a basic machine learning problem.
+
+## typescipt
+
+#### strongly typed returners
+
+Returners get iterator values as an `unknown`. There is a helper type `ExtractIteratorValues` to help you strongly type the values:
+
+```ts
+import StrTempl, { ExtractIteratorValues, ITemplatingOptions } from 'string-templating'
+
+const iterators = {
+	num: function*() {
+		yield* [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+	}
+}
+
+const config: ITemplatingOptions = {
+	amount: 5,
+	template: '${iterators.num}+${iterators.num}=${returners.sum}',
+	iterators,
+	returners: {
+		sum: (iterVals: ExtractIteratorValues<typeof iterators, true>) =>
+			iterVals.num[0] + iterVals.num[1]
+	},
+	recycle: true
+}
+
+const result = StrTempl(config)
+```
+
+Pass in your iterators and whether you're recycling them.

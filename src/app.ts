@@ -2,29 +2,37 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { range } from './helpers'
 
-interface Stringifiable {
+export interface IStringifiable {
 	toString: () => string
 }
 
-type IteratorMap = {
-	[key: string]: () => Iterator<Stringifiable>
+export type IteratorMap = {
+	[key: string]: () => Iterator<IStringifiable>
 }
 
-type ReturnerMap = {
-	[key: string]: (iteratorValues: any) => Stringifiable
+export type ReturnerMap = {
+	[key: string]: (iteratorValues: unknown) => IStringifiable
 }
 
-type Props = {
+export type ExtractIteratorValues<T extends IteratorMap, U extends boolean> = {
+	[key in keyof T]: ReturnType<T[key]> extends Iterator<infer B>
+		? U extends true
+			? B[]
+			: B
+		: never
+}
+
+export interface ITemplatingOptions {
 	amount: number
 	template: string
-	outFile?: fs.PathLike | null
+	outFile?: fs.PathLike
 	iterators: IteratorMap
 	returners?: ReturnerMap
 	recycle?: boolean
 }
 
 const initializeIters = (iterators: IteratorMap) => {
-	const initIters: { [key: string]: Iterator<Stringifiable> } = {}
+	const initIters: { [key: string]: Iterator<IStringifiable> } = {}
 
 	for (const key of Object.keys(iterators)) {
 		initIters[key] = iterators[key]()
@@ -36,11 +44,11 @@ const initializeIters = (iterators: IteratorMap) => {
 export default ({
 	amount,
 	template,
-	outFile = null,
+	outFile,
 	iterators,
 	returners = {},
 	recycle = false
-}: Props): string[] => {
+}: ITemplatingOptions): string[] => {
 	const outputs = new Array<string>(amount)
 
 	const initIters = initializeIters(iterators)
@@ -48,10 +56,10 @@ export default ({
 	for (const i of range(amount)) {
 		let curr = template
 
-		const iterVals: { [key: string]: Stringifiable | Stringifiable[] } = {}
+		const iterVals: { [key: string]: IStringifiable | IStringifiable[] } = {}
 
 		for (const key of Object.keys(initIters)) {
-			const toReplace = '${iterator.' + key + '}'
+			const toReplace = '${iterators.' + key + '}'
 
 			if (recycle) {
 				iterVals[key] = []
@@ -59,7 +67,7 @@ export default ({
 					if (curr.includes(toReplace)) {
 						const currVal = initIters[key].next().value
 						curr = curr.replace(toReplace, currVal.toString())
-						;(iterVals[key] as Stringifiable[]).push(currVal)
+						;(iterVals[key] as IStringifiable[]).push(currVal)
 					} else break
 				}
 			} else {
@@ -70,7 +78,7 @@ export default ({
 		}
 
 		for (const key of Object.keys(returners)) {
-			const toReplace = '${returner.' + key + '}'
+			const toReplace = '${returners.' + key + '}'
 
 			const currVal = returners[key](iterVals)
 			curr = curr.split(toReplace).join(currVal.toString())
@@ -79,7 +87,7 @@ export default ({
 		outputs[i] = curr
 	}
 
-	if (outFile !== null) {
+	if (outFile) {
 		const ext = path.extname(outFile as string)
 
 		fs.writeFileSync(outFile, ext === '.json' ? JSON.stringify(outputs) : outputs.join('\n'))
