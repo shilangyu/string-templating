@@ -1,6 +1,6 @@
 # string templating
 
-![](https://github.com/shilangyu/string-templating/workflows/string-templating/badge.svg)
+[![](https://github.com/shilangyu/string-templating/workflows/string-templating/badge.svg)](https://github.com/shilangyu/string-templating/actions)
 
 template strings and output them to a file (use-case: sql queries, ML datasets)
 
