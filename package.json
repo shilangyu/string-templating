@@ -1,46 +1,46 @@
 {
-	"name": "string-templating",
-	"version": "3.0.0",
-	"description": "template strings and output them to a file (use-case: sql queries, ML datasets)",
-	"main": "./dist/app.js",
-	"types": "./dist/app.d.ts",
-	"scripts": {
-		"test": "jest --no-cache",
-		"build": "tsc",
-		"prepare": "npm run build",
-		"prepublishOnly": "npm test",
-		"postversion": "git push && git push --tags"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/shilangyu/string-templating.git"
-	},
-	"keywords": [
-		"string-templating",
-		"dataset",
-		"generate"
-	],
-	"author": "Marcin Wojnarowski @shilangyu",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/shilangyu/string-templating/issues"
-	},
-	"homepage": "https://github.com/shilangyu/string-templating#readme",
-	"devDependencies": {
-		"@types/jest": "^24.0.11",
-		"@types/node": "^13.1.0",
-		"husky": "^4.0.0",
-		"jest": "^24.7.1",
-		"ts-jest": "^24.0.2",
-		"typescript": "^3.4.2"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "npm test"
-		}
-	},
-	"files": [
-		"dist/**/*",
-		"./tsconfig.json"
-	]
+  "name": "string-templating",
+  "version": "3.0.0",
+  "description": "template strings and output them to a file (use-case: sql queries, ML datasets)",
+  "main": "./dist/app.js",
+  "types": "./dist/app.d.ts",
+  "scripts": {
+    "test": "jest --no-cache",
+    "build": "tsc",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shilangyu/string-templating.git"
+  },
+  "keywords": [
+    "string-templating",
+    "dataset",
+    "generate"
+  ],
+  "author": "Marcin Wojnarowski @shilangyu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shilangyu/string-templating/issues"
+  },
+  "homepage": "https://github.com/shilangyu/string-templating#readme",
+  "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "@types/node": "^13.1.0",
+    "husky": "^4.0.0",
+    "jest": "^24.7.1",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
+    }
+  },
+  "files": [
+    "dist/**/*",
+    "./tsconfig.json"
+  ]
 }
