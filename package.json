@@ -28,7 +28,7 @@
   "homepage": "https://github.com/shilangyu/string-templating#readme",
   "devDependencies": {
     "@types/jest": "^25.1.0",
-    "@types/node": "^13.1.0",
+    "@types/node": "^14.0.1",
     "husky": "^4.0.0",
     "jest": "^25.1.0",
     "ts-jest": "^25.0.0",
