@@ -1633,10 +1633,10 @@ human-signals@^1.1.1:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-1.1.1.tgz#c5b1cd14f50aeae09ab6c59fe63ba3395fe4dfa3"
   integrity sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==
 
-husky@^8.0.1:
-  version "8.0.3"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-8.0.3.tgz#4936d7212e46d1dea28fef29bb3a108872cd9184"
-  integrity sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==
+husky@^9.0.8:
+  version "9.0.8"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-9.0.8.tgz#e10824d483e8e0bd779bca79801a448d435829a6"
+  integrity sha512-/f3Oj+419kf2RkchD5GpFTPj8yAeMYuSs0vB+cgdi8pDxydI8zCFlK/kVQOCqAujahfW6fDBb7t/ZWxTfevOpA==
 
 iconv-lite@0.4.24:
   version "0.4.24"
